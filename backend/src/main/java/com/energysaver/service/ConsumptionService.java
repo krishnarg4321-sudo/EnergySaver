@@ -3,10 +3,12 @@ package com.energysaver.service;
 import com.energysaver.dto.ConsumptionDTO;
 import com.energysaver.dto.ConsumptionLogRequest;
 import com.energysaver.entity.DailyConsumption;
+import com.energysaver.entity.User;
 import com.energysaver.entity.UserAppliance;
 import com.energysaver.exception.ResourceNotFoundException;
 import com.energysaver.repository.DailyConsumptionRepository;
 import com.energysaver.repository.UserApplianceRepository;
+import com.energysaver.repository.UserRepository;
 import com.energysaver.util.EnergyCalculator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,17 +24,26 @@ public class ConsumptionService {
     
     private final DailyConsumptionRepository dailyConsumptionRepository;
     private final UserApplianceRepository userApplianceRepository;
+    private final UserRepository userRepository;
     
     public ConsumptionService(DailyConsumptionRepository dailyConsumptionRepository,
-                             UserApplianceRepository userApplianceRepository) {
+                             UserApplianceRepository userApplianceRepository,
+                             UserRepository userRepository) {
         this.dailyConsumptionRepository = dailyConsumptionRepository;
         this.userApplianceRepository = userApplianceRepository;
+        this.userRepository = userRepository;
     }
     
-    public ConsumptionDTO logConsumption(Long userId, ConsumptionLogRequest request) {
-        UserAppliance userAppliance = userApplianceRepository.findByIdAndUserId(request.getUserApplianceId(), userId)
+    private User getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
+    }
+    
+    public ConsumptionDTO logConsumption(String username, ConsumptionLogRequest request) {
+        User user = getUserByUsername(username);
+        UserAppliance userAppliance = userApplianceRepository.findByIdAndUserId(request.getUserApplianceId(), user.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "User appliance not found with id: " + request.getUserApplianceId() + " for user: " + userId));
+                        "User appliance not found with id: " + request.getUserApplianceId() + " for user: " + username));
         
         double ratedWatts = userAppliance.getEffectiveRatedWatts();
         double hoursUsed = request.getHoursUsed();
@@ -57,8 +68,9 @@ public class ConsumptionService {
     }
     
     @Transactional(readOnly = true)
-    public List<ConsumptionDTO> getUserConsumption(Long userId, LocalDate startDate, LocalDate endDate) {
-        return dailyConsumptionRepository.findByUserIdAndDateRange(userId, startDate, endDate).stream()
+    public List<ConsumptionDTO> getUserConsumption(String username, LocalDate startDate, LocalDate endDate) {
+        User user = getUserByUsername(username);
+        return dailyConsumptionRepository.findByUserIdAndDateRange(user.getId(), startDate, endDate).stream()
                 .map(this::convertToConsumptionDTO)
                 .collect(Collectors.toList());
     }

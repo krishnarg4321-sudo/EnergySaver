@@ -39,9 +39,13 @@ public class ApplianceService {
                 .collect(Collectors.toList());
     }
     
-    public UserApplianceDTO addApplianceToUser(Long userId, AddApplianceRequest request) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
+    private User getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
+    }
+    
+    public UserApplianceDTO addApplianceToUser(String username, AddApplianceRequest request) {
+        User user = getUserByUsername(username);
         
         Appliance appliance = applianceRepository.findById(request.getApplianceId())
                 .orElseThrow(() -> new ResourceNotFoundException("Appliance not found with id: " + request.getApplianceId()));
@@ -58,20 +62,19 @@ public class ApplianceService {
     }
     
     @Transactional(readOnly = true)
-    public List<UserApplianceDTO> getUserAppliances(Long userId) {
-        if (!userRepository.existsById(userId)) {
-            throw new ResourceNotFoundException("User not found with id: " + userId);
-        }
+    public List<UserApplianceDTO> getUserAppliances(String username) {
+        User user = getUserByUsername(username);
         
-        return userApplianceRepository.findByUserId(userId).stream()
+        return userApplianceRepository.findByUserId(user.getId()).stream()
                 .map(this::convertToUserApplianceDTO)
                 .collect(Collectors.toList());
     }
     
-    public void deleteUserAppliance(Long userId, Long userApplianceId) {
-        UserAppliance userAppliance = userApplianceRepository.findByIdAndUserId(userApplianceId, userId)
+    public void deleteUserAppliance(String username, Long userApplianceId) {
+        User user = getUserByUsername(username);
+        UserAppliance userAppliance = userApplianceRepository.findByIdAndUserId(userApplianceId, user.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "User appliance not found with id: " + userApplianceId + " for user: " + userId));
+                        "User appliance not found with id: " + userApplianceId + " for user: " + username));
         
         userApplianceRepository.delete(userAppliance);
     }

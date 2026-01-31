@@ -1,9 +1,12 @@
 package com.energysaver.service;
 
 import com.energysaver.dto.SuggestionDTO;
+import com.energysaver.entity.User;
 import com.energysaver.entity.UserAppliance;
+import com.energysaver.exception.ResourceNotFoundException;
 import com.energysaver.repository.DailyConsumptionRepository;
 import com.energysaver.repository.UserApplianceRepository;
+import com.energysaver.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,22 +21,31 @@ public class SuggestionService {
     
     private final DailyConsumptionRepository dailyConsumptionRepository;
     private final UserApplianceRepository userApplianceRepository;
+    private final UserRepository userRepository;
     
     public SuggestionService(DailyConsumptionRepository dailyConsumptionRepository,
-                            UserApplianceRepository userApplianceRepository) {
+                            UserApplianceRepository userApplianceRepository,
+                            UserRepository userRepository) {
         this.dailyConsumptionRepository = dailyConsumptionRepository;
         this.userApplianceRepository = userApplianceRepository;
+        this.userRepository = userRepository;
     }
     
-    public List<SuggestionDTO> getSuggestions(Long userId) {
-        List<UserAppliance> userAppliances = userApplianceRepository.findByUserId(userId);
+    private User getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
+    }
+    
+    public List<SuggestionDTO> getSuggestions(String username) {
+        User user = getUserByUsername(username);
+        List<UserAppliance> userAppliances = userApplianceRepository.findByUserId(user.getId());
         
         if (userAppliances.isEmpty()) {
             return List.of();
         }
         
         List<Object[]> totalConsumptionData = dailyConsumptionRepository
-                .findTotalConsumptionByUserAppliance(userId);
+                .findTotalConsumptionByUserAppliance(user.getId());
         
         Map<Long, Double> consumptionMap = new HashMap<>();
         for (Object[] row : totalConsumptionData) {

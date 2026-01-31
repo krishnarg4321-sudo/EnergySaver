@@ -52,6 +52,11 @@ public class AlertService {
         this.messagingTemplate = messagingTemplate;
     }
     
+    private User getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
+    }
+    
     @Scheduled(cron = "0 0 0 * * ?")
     public void detectHighConsumption() {
         LocalDate yesterday = LocalDate.now().minusDays(1);
@@ -111,22 +116,21 @@ public class AlertService {
     }
     
     @Transactional(readOnly = true)
-    public List<AlertDTO> getUserAlerts(Long userId) {
-        if (!userRepository.existsById(userId)) {
-            throw new ResourceNotFoundException("User not found with id: " + userId);
-        }
+    public List<AlertDTO> getUserAlerts(String username) {
+        User user = getUserByUsername(username);
         
-        return alertNotificationRepository.findByUserId(userId).stream()
+        return alertNotificationRepository.findByUserId(user.getId()).stream()
                 .map(this::convertToAlertDTO)
                 .collect(Collectors.toList());
     }
     
-    public AlertDTO markAlertAsRead(Long alertId, Long userId) {
+    public AlertDTO markAlertAsRead(Long alertId, String username) {
+        User user = getUserByUsername(username);
         AlertNotification alert = alertNotificationRepository.findById(alertId)
                 .orElseThrow(() -> new ResourceNotFoundException("Alert not found with id: " + alertId));
         
-        if (!alert.getUser().getId().equals(userId)) {
-            throw new ResourceNotFoundException("Alert not found with id: " + alertId + " for user: " + userId);
+        if (!alert.getUser().getId().equals(user.getId())) {
+            throw new ResourceNotFoundException("Alert not found with id: " + alertId + " for user: " + username);
         }
         
         alert.setIsRead(true);
@@ -135,12 +139,13 @@ public class AlertService {
         return convertToAlertDTO(alert);
     }
     
-    public void respondToAlert(AlertResponseRequest request, Long userId) {
+    public void respondToAlert(AlertResponseRequest request, String username) {
+        User user = getUserByUsername(username);
         AlertNotification alert = alertNotificationRepository.findById(request.getAlertId())
                 .orElseThrow(() -> new ResourceNotFoundException("Alert not found with id: " + request.getAlertId()));
         
-        if (!alert.getUser().getId().equals(userId)) {
-            throw new ResourceNotFoundException("Alert not found with id: " + request.getAlertId() + " for user: " + userId);
+        if (!alert.getUser().getId().equals(user.getId())) {
+            throw new ResourceNotFoundException("Alert not found with id: " + request.getAlertId() + " for user: " + username);
         }
         
         AlertResponse response = new AlertResponse();
@@ -158,7 +163,7 @@ public class AlertService {
             LocalDate today = LocalDate.now();
             
             List<DailyConsumption> recentConsumption = dailyConsumptionRepository
-                    .findByUserIdAndDate(userId, today.minusDays(1));
+                    .findByUserIdAndDate(user.getId(), today.minusDays(1));
             
             for (DailyConsumption dc : recentConsumption) {
                 if (dc.getUserAppliance().getId().equals(userAppliance.getId())) {

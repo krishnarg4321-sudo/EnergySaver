@@ -1,8 +1,8 @@
 package com.energysaver.controller;
 
-import com.energysaver.dto.UserApplianceRequest;
-import com.energysaver.entity.Appliance;
-import com.energysaver.entity.UserAppliance;
+import com.energysaver.dto.AddApplianceRequest;
+import com.energysaver.dto.ApplianceDTO;
+import com.energysaver.dto.UserApplianceDTO;
 import com.energysaver.service.ApplianceService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,24 +23,24 @@ public class ApplianceController {
     private ApplianceService applianceService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Appliance>> getAllAppliances() {
-        List<Appliance> appliances = applianceService.getAllAppliances();
+    public ResponseEntity<List<ApplianceDTO>> getAllAppliances() {
+        List<ApplianceDTO> appliances = applianceService.getAllAppliances();
         return ResponseEntity.ok(appliances);
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<UserAppliance>> getUserAppliances() {
+    public ResponseEntity<List<UserApplianceDTO>> getUserAppliances() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        List<UserAppliance> userAppliances = applianceService.getUserAppliances(username);
+        List<UserApplianceDTO> userAppliances = applianceService.getUserAppliances(username);
         return ResponseEntity.ok(userAppliances);
     }
 
     @PostMapping("/user")
-    public ResponseEntity<UserAppliance> addUserAppliance(@Valid @RequestBody UserApplianceRequest request) {
+    public ResponseEntity<UserApplianceDTO> addUserAppliance(@Valid @RequestBody AddApplianceRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        UserAppliance userAppliance = applianceService.addUserAppliance(username, request);
+        UserApplianceDTO userAppliance = applianceService.addApplianceToUser(username, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(userAppliance);
     }
 

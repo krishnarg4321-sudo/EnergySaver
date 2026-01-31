@@ -1,6 +1,7 @@
 package com.energysaver.controller;
 
-import com.energysaver.dto.StatsResponse;
+import com.energysaver.dto.WeeklyStatsDTO;
+import com.energysaver.dto.MonthlyStatsDTO;
 import com.energysaver.service.StatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,18 +18,18 @@ public class StatsController {
     private StatsService statsService;
 
     @GetMapping("/weekly")
-    public ResponseEntity<StatsResponse> getWeeklyStats() {
+    public ResponseEntity<WeeklyStatsDTO> getWeeklyStats() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        StatsResponse stats = statsService.getWeeklyStats(username);
+        WeeklyStatsDTO stats = statsService.getWeeklyStats(username);
         return ResponseEntity.ok(stats);
     }
 
     @GetMapping("/monthly")
-    public ResponseEntity<StatsResponse> getMonthlyStats() {
+    public ResponseEntity<MonthlyStatsDTO> getMonthlyStats() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        StatsResponse stats = statsService.getMonthlyStats(username);
+        MonthlyStatsDTO stats = statsService.getMonthlyStats(username);
         return ResponseEntity.ok(stats);
     }
 }

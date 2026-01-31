@@ -1,7 +1,7 @@
 package com.energysaver.controller;
 
-import com.energysaver.dto.ConsumptionRequest;
-import com.energysaver.entity.ConsumptionLog;
+import com.energysaver.dto.ConsumptionLogRequest;
+import com.energysaver.dto.ConsumptionDTO;
 import com.energysaver.service.ConsumptionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -24,20 +24,20 @@ public class ConsumptionController {
     private ConsumptionService consumptionService;
 
     @PostMapping("/log")
-    public ResponseEntity<ConsumptionLog> logConsumption(@Valid @RequestBody ConsumptionRequest request) {
+    public ResponseEntity<ConsumptionDTO> logConsumption(@Valid @RequestBody ConsumptionLogRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        ConsumptionLog consumptionLog = consumptionService.logConsumption(username, request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(consumptionLog);
+        ConsumptionDTO consumptionDTO = consumptionService.logConsumption(username, request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(consumptionDTO);
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<ConsumptionLog>> getUserConsumption(
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+    public ResponseEntity<List<ConsumptionDTO>> getUserConsumption(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        List<ConsumptionLog> consumptionLogs = consumptionService.getUserConsumption(username, startDate, endDate);
-        return ResponseEntity.ok(consumptionLogs);
+        List<ConsumptionDTO> consumptionDTOs = consumptionService.getUserConsumption(username, startDate, endDate);
+        return ResponseEntity.ok(consumptionDTOs);
     }
 }

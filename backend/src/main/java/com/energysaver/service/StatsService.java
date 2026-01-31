@@ -2,9 +2,12 @@ package com.energysaver.service;
 
 import com.energysaver.dto.MonthlyStatsDTO;
 import com.energysaver.dto.WeeklyStatsDTO;
+import com.energysaver.entity.User;
 import com.energysaver.entity.UserAppliance;
+import com.energysaver.exception.ResourceNotFoundException;
 import com.energysaver.repository.DailyConsumptionRepository;
 import com.energysaver.repository.UserApplianceRepository;
+import com.energysaver.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,14 +27,24 @@ public class StatsService {
     
     private final DailyConsumptionRepository dailyConsumptionRepository;
     private final UserApplianceRepository userApplianceRepository;
+    private final UserRepository userRepository;
     
     public StatsService(DailyConsumptionRepository dailyConsumptionRepository,
-                       UserApplianceRepository userApplianceRepository) {
+                       UserApplianceRepository userApplianceRepository,
+                       UserRepository userRepository) {
         this.dailyConsumptionRepository = dailyConsumptionRepository;
         this.userApplianceRepository = userApplianceRepository;
+        this.userRepository = userRepository;
     }
     
-    public WeeklyStatsDTO getWeeklyStats(Long userId) {
+    private User getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
+    }
+    
+    public WeeklyStatsDTO getWeeklyStats(String username) {
+        User user = getUserByUsername(username);
+        Long userId = user.getId();
         LocalDate today = LocalDate.now();
         int currentWeek = today.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
         int currentYear = today.get(IsoFields.WEEK_BASED_YEAR);
@@ -91,7 +104,9 @@ public class StatsService {
         return dto;
     }
     
-    public MonthlyStatsDTO getMonthlyStats(Long userId) {
+    public MonthlyStatsDTO getMonthlyStats(String username) {
+        User user = getUserByUsername(username);
+        Long userId = user.getId();
         LocalDate today = LocalDate.now();
         int currentMonth = today.getMonthValue();
         int currentYear = today.getYear();
