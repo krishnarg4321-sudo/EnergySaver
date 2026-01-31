@@ -58,19 +58,7 @@ public class ConsumptionService {
     
     @Transactional(readOnly = true)
     public List<ConsumptionDTO> getUserConsumption(Long userId, LocalDate startDate, LocalDate endDate) {
-        List<UserAppliance> userAppliances = userApplianceRepository.findByUserId(userId);
-        
-        if (userAppliances.isEmpty()) {
-            return List.of();
-        }
-        
-        List<Long> userApplianceIds = userAppliances.stream()
-                .map(UserAppliance::getId)
-                .collect(Collectors.toList());
-        
-        return dailyConsumptionRepository.findAll().stream()
-                .filter(dc -> userApplianceIds.contains(dc.getUserAppliance().getId()))
-                .filter(dc -> !dc.getLogDate().isBefore(startDate) && !dc.getLogDate().isAfter(endDate))
+        return dailyConsumptionRepository.findByUserIdAndDateRange(userId, startDate, endDate).stream()
                 .map(this::convertToConsumptionDTO)
                 .collect(Collectors.toList());
     }

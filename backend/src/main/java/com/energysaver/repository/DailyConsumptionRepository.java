@@ -87,4 +87,13 @@ public interface DailyConsumptionRepository extends JpaRepository<DailyConsumpti
            "WHERE ua.user.id = :userId " +
            "AND NOT EXISTS (SELECT 1 FROM DailyConsumption dc WHERE dc.userAppliance.id = ua.id)")
     List<Object> findUserAppliancesWithZeroConsumption(@Param("userId") Long userId);
+    
+    // Get consumption by user and date range
+    @Query("SELECT dc FROM DailyConsumption dc " +
+           "WHERE dc.userAppliance.user.id = :userId " +
+           "AND dc.logDate BETWEEN :startDate AND :endDate " +
+           "ORDER BY dc.logDate DESC")
+    List<DailyConsumption> findByUserIdAndDateRange(@Param("userId") Long userId,
+                                                      @Param("startDate") LocalDate startDate,
+                                                      @Param("endDate") LocalDate endDate);
 }
