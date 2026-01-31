@@ -1,0 +1,137 @@
+.card {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(255, 215, 0, 0.15) 100%);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(255, 215, 0, 0.3);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(255, 215, 0, 0.4);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.applianceName {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #FFD700;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.category {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffffff;
+  background: rgba(255, 215, 0, 0.2);
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-transform: capitalize;
+}
+
+.cardBody {
+  margin-bottom: 15px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.value {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #FFD700;
+}
+
+.deleteBtn {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.3) 0%, rgba(255, 0, 0, 0.1) 100%);
+  border: 1px solid rgba(255, 0, 0, 0.4);
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.deleteBtn:hover {
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.5) 0%, rgba(255, 0, 0, 0.2) 100%);
+  transform: scale(1.02);
+}
+
+.confirmBox {
+  margin-top: 10px;
+}
+
+.confirmText {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #FFD700;
+  margin: 0 0 10px 0;
+  text-align: center;
+}
+
+.confirmButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.confirmBtn,
+.cancelBtn {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  border: none;
+}
+
+.confirmBtn {
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.5) 0%, rgba(255, 0, 0, 0.2) 100%);
+  border: 1px solid rgba(255, 0, 0, 0.4);
+}
+
+.confirmBtn:hover {
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.7) 0%, rgba(255, 0, 0, 0.3) 100%);
+}
+
+.cancelBtn {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 215, 0, 0.1) 100%);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+}
+
+.cancelBtn:hover {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.5) 0%, rgba(255, 215, 0, 0.2) 100%);
+}

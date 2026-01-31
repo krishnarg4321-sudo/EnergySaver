@@ -1,0 +1,72 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  gap: 20px;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(255, 215, 0, 0.2) 100%);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(255, 215, 0, 0.3);
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 2s ease-in-out infinite;
+  position: relative;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8px 32px rgba(255, 215, 0, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 12px 40px rgba(255, 215, 0, 0.5);
+  }
+}
+
+.spinnerInner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #FFD700;
+  border-right-color: #FFD700;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingText {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #FFD700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  margin: 0;
+  animation: fadeInOut 2s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}

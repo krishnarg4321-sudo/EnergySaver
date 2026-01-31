@@ -1,0 +1,183 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2d2600 100%);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffd700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 300;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.errorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.errorBox {
+  background: rgba(255, 59, 48, 0.1);
+  border: 1px solid rgba(255, 59, 48, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 500px;
+}
+
+.errorIcon {
+  width: 40px;
+  height: 40px;
+  background: #ff3b30;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.errorText {
+  color: #ff6b6b;
+  font-size: 1.1rem;
+  margin: 0 0 1rem 0;
+}
+
+.retryButton {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.retryButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+}
+
+.suggestionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.emptyState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.emptyCard {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 20px;
+  padding: 3rem;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.emptyIcon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+}
+
+.emptyTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #ffd700;
+  margin-bottom: 1rem;
+}
+
+.emptyText {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .suggestionsGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .emptyCard {
+    padding: 2rem;
+  }
+
+  .emptyIcon {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+
+  .emptyTitle {
+    font-size: 1.5rem;
+  }
+
+  .emptyText {
+    font-size: 1rem;
+  }
+}

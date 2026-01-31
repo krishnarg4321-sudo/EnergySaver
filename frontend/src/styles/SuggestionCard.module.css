@@ -1,0 +1,148 @@
+.card {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(255, 215, 0, 0.15) 100%);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(255, 215, 0, 0.3);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(255, 215, 0, 0.4);
+}
+
+.cardReduction {
+  border-color: rgba(255, 0, 0, 0.4);
+  box-shadow: 0 8px 32px rgba(255, 0, 0, 0.3);
+}
+
+.cardReduction:hover {
+  box-shadow: 0 12px 40px rgba(255, 0, 0, 0.4);
+}
+
+.cardPositive {
+  border-color: rgba(0, 255, 0, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 255, 0, 0.3);
+}
+
+.cardPositive:hover {
+  box-shadow: 0 12px 40px rgba(0, 255, 0, 0.4);
+}
+
+.cardCleanup {
+  border-color: rgba(255, 215, 0, 0.5);
+  box-shadow: 0 8px 32px rgba(255, 215, 0, 0.4);
+}
+
+.cardCleanup:hover {
+  box-shadow: 0 12px 40px rgba(255, 215, 0, 0.5);
+}
+
+.cardDefault {
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.cardHeader {
+  margin-bottom: 10px;
+}
+
+.typeLabel {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 12px;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cardReduction .typeLabel {
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.3) 0%, rgba(255, 0, 0, 0.1) 100%);
+  color: #ff6666;
+  border: 1px solid rgba(255, 0, 0, 0.4);
+}
+
+.cardPositive .typeLabel {
+  background: linear-gradient(135deg, rgba(0, 255, 0, 0.3) 0%, rgba(0, 255, 0, 0.1) 100%);
+  color: #66ff66;
+  border: 1px solid rgba(0, 255, 0, 0.4);
+}
+
+.cardCleanup .typeLabel {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 215, 0, 0.1) 100%);
+  color: #FFD700;
+  border: 1px solid rgba(255, 215, 0, 0.4);
+}
+
+.cardDefault .typeLabel {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 215, 0, 0.1) 100%);
+  color: #FFD700;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.applianceName {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFD700;
+  margin: 0 0 15px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.cardBody {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.value {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #FFD700;
+}
+
+.messageBox {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 15px;
+  border-left: 3px solid #FFD700;
+}
+
+.message {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.cardReduction .messageBox {
+  border-left-color: #ff6666;
+}
+
+.cardPositive .messageBox {
+  border-left-color: #66ff66;
+}
+
+.cardCleanup .messageBox {
+  border-left-color: #FFD700;
+}
