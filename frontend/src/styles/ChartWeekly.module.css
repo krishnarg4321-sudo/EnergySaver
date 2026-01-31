@@ -1,0 +1,145 @@
+.chartContainer {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.header {
+  margin-bottom: 32px;
+}
+
+.title {
+  color: #FFD700;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.totalWh {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  color: rgba(255, 215, 0, 0.7);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.value {
+  color: #FFD700;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.comparison {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 215, 0, 0.15);
+}
+
+.comparisonIcon {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.comparisonValue {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.comparisonLabel {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.increase {
+  color: #FF4444;
+}
+
+.increase .comparisonIcon,
+.increase .comparisonValue {
+  color: #FF4444;
+}
+
+.decrease {
+  color: #00FF88;
+}
+
+.decrease .comparisonIcon,
+.decrease .comparisonValue {
+  color: #00FF88;
+}
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.chartWrapper {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.chartTitle {
+  color: #FFD700;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .chartContainer {
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .stats {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .chartsGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .value {
+    font-size: 20px;
+  }
+
+  .comparisonValue {
+    font-size: 16px;
+  }
+}
